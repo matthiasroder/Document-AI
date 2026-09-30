@@ -414,6 +414,10 @@ td code {
   }
 }
 
+@page {
+  margin: 0.6in;
+}
+
 @media print {
   body {
     background: #fff;
@@ -452,17 +456,41 @@ td code {
 
   #checklist {
     break-before: page;
+    margin: 0;
+    padding: 0;
+  }
+
+  #checklist .step-kicker,
+  #checklist h2 {
+    margin-bottom: 0.15rem;
+  }
+
+  #checklist .why {
+    margin: 0.15rem 0 0.35rem;
+    padding: 0.1rem 0;
+    background: transparent;
+  }
+
+  #checklist .sheet {
+    padding: 0;
+    border: 0;
+    background: transparent;
   }
 
   #checklist h3 {
-    margin-top: 0.7rem;
-    font-size: 12pt;
+    margin: 0.45rem 0 0.05rem;
+    font-size: 11pt;
   }
 
-  .checks li {
-    font-size: 10.5pt;
-    padding-top: 0.15rem;
-    padding-bottom: 0.15rem;
+  #checklist .checks {
+    margin: 0;
+  }
+
+  #checklist .checks li {
+    font-size: 10pt;
+    line-height: 1.25;
+    padding-top: 0.08rem;
+    padding-bottom: 0.08rem;
   }
 
   .checks li::before {
