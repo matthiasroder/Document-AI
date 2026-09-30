@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical guide to preparing document repositories for search, retrieval-augmented generation, and other language-model workflows.">
+  <meta name="color-scheme" content="light dark">
+  <title>Prepare documents for AI</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+
+  <header class="hero">
+    <p class="kicker">Document-AI</p>
+    <h1>Prepare documents for AI</h1>
+    <p class="lede">A practical guide to getting a repository of files ready for search, retrieval-augmented generation, and other language-model workflows.</p>
+  </header>
+
+  <div class="layout">
+    <nav aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">Contents</p>
+      <ol>
+        <li><a href="#why">Why this matters</a></li>
+        <li><a href="#formats">Target formats</a></li>
+        <li><a href="#inventory">1. Inventory and scope</a></li>
+        <li><a href="#cleanup">2. Clean up</a></li>
+        <li><a href="#structure">3. Folders and file names</a></li>
+        <li><a href="#metadata">4. Metadata</a></li>
+        <li><a href="#pdfs">5. PDFs</a></li>
+        <li><a href="#emails">6. Emails</a></li>
+        <li><a href="#office">7. Text and office files</a></li>
+        <li><a href="#spreadsheets">8. Spreadsheets and CSV</a></li>
+        <li><a href="#images">9. Images, slides, and scans</a></li>
+        <li><a href="#chunking">10. Chunking</a></li>
+        <li><a href="#privacy">11. Privacy and security</a></li>
+        <li><a href="#quality">12. Quality checks</a></li>
+        <li><a href="#freshness">13. Keeping it fresh</a></li>
+        <li><a href="#checklist">14. Checklist</a></li>
+      </ol>
+    </nav>
+
+    <main id="content">
+      <section id="why">
+        <h2>Why preparation matters</h2>
+        <p>This guide is for people who already have a pile of files: a shared drive, an exported mailbox, a wiki dump, a folder of contracts. Search and language models can only use the text you give them. They do not know which copy is current. They cannot read a photograph of a page until something has recognized the letters. They will repeat a password, a home address, or an old policy if that text is in the index.</p>
+        <p>Most bad answers start in the files, before anyone writes a prompt. Duplicate drafts compete with the real document. Scans have no text layer. Tables get read across the wrong way. Every email reply contains the whole thread again. Dates are missing, so nothing can tell the 2019 draft from the rule in force.</p>
+        <p>Preparation is ordinary library work. You decide what is in scope, keep one current copy, turn it into clean text with a title and a source, and check that a real question finds the right passage. The steps below are enough to start with common tools. Work them in order. Skip a conversion step when you do not have that kind of file, and still run the checklist so the skip was a choice.</p>
+        <p>Tool names below are starting points. Commands change between versions. If a flag differs from what you have installed, the project’s own <code>--help</code> wins.</p>
+      </section>
+
+      <section id="formats">
+        <h2>Target formats</h2>
+        <p>Pick one text form for the index and keep the original file as the record people still edit or sign. The text form is what search and the model read.</p>
+        <div class="table-scroll">
+          <table>
+            <caption>Recommended target for each kind of file. Keep the original next to the text.</caption>
+            <thead>
+              <tr>
+                <th scope="col">You have</th>
+                <th scope="col">Store this for the index</th>
+                <th scope="col">Why this form</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Text PDF</th>
+                <td>Markdown or UTF-8 text, plus the PDF</td>
+                <td>The words are already in the file. The PDF stays the record.</td>
+              </tr>
+              <tr>
+                <th scope="row">Scanned PDF</th>
+                <td>A searchable PDF, then Markdown or UTF-8 text</td>
+                <td>OCR adds a text layer. Models cannot read the picture alone.</td>
+              </tr>
+              <tr>
+                <th scope="row">Email</th>
+                <td><code>.eml</code> or <code>.mbox</code>, plus a cleaned text copy</td>
+                <td>Headers stay intact. The text copy is what you index.</td>
+              </tr>
+              <tr>
+                <th scope="row">Word, ODT, RTF, HTML</th>
+                <td>Markdown</td>
+                <td>Headings survive and give you sections to split on.</td>
+              </tr>
+              <tr>
+                <th scope="row">Plain text</th>
+                <td>UTF-8 text with LF line endings</td>
+                <td>Stops encoding damage and noisy diffs.</td>
+              </tr>
+              <tr>
+                <th scope="row">Spreadsheet</th>
+                <td>CSV, one table per file, plus a column note</td>
+                <td>Each row means one thing, and each column has a name.</td>
+              </tr>
+              <tr>
+                <th scope="row">Slides</th>
+                <td>Markdown, one section per slide</td>
+                <td>Titles, body text, and speaker notes become readable.</td>
+              </tr>
+              <tr>
+                <th scope="row">Image or photo of a page</th>
+                <td>The image, a caption, and OCR text if it contains words</td>
+                <td>Search sees the caption and the recognized text.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="step" id="inventory">
+        <p class="step-kicker">Step 1</p>
+        <h2>Inventory and scope</h2>
+        <p class="why"><span class="label">Why</span> You can only prepare a collection you have listed. Indexing everything also pulls in drafts, personal mail, and files a smaller group was meant to see alone.</p>
+        <h3>How</h3>
+        <ul>
+          <li>List every place documents live: shared drives, SharePoint or Google Drive exports, wikis, ticket exports, local project folders, and mail archives.</li>
+          <li>For each collection, write the path, the kinds of files, the date range, the owner, and whether people still treat that place as the source of record.</li>
+          <li>Mark each collection in or out. Out includes drafts you will not stand behind, personal mailboxes, copies of a system you already included, and anything legal or contract staff say must stay out.</li>
+          <li>Name one owner for the prepared corpus, and keep the owner of each source collection. Someone has to answer “is this the current file?”</li>
+        </ul>
+        <p>A spreadsheet is enough. Suggested columns: location, file types, date range, owner, in or out, reason, sensitivity. This is a decision record. It does not need to be a cataloging system.</p>
+      </section>
+
+      <section class="step" id="cleanup">
+        <p class="step-kicker">Step 2</p>
+        <h2>Clean up</h2>
+        <p class="why"><span class="label">Why</span> Duplicates and old drafts compete with the current document. Search then returns several answers, and the longest one is often the wrong version.</p>
+        <h3>How</h3>
+        <ul>
+          <li>Find exact copies by file content. <a href="https://github.com/adrianlopezroche/fdupes">fdupes</a> groups files that are byte-for-byte identical. Keep one copy of each group.</li>
+          <li>Find near copies by hand where the names give them away: <code>final</code>, <code>v7</code>, <code>latest</code>, dates, and <code>(1)</code>. Ask the owner which file is current. If nobody will say, keep the latest approved copy and write that rule in the inventory.</li>
+          <li>Move rejected copies to a folder you do not index, or delete them when retention rules allow. Leave them out of the folder you will convert.</li>
+          <li>Remove junk an indexer would treat as documents: <code>.DS_Store</code>, <code>Thumbs.db</code>, <code>desktop.ini</code>, Word lock files (<code>~$*</code>), <code>.tmp</code> files, empty files, and installer logs.</li>
+        </ul>
+        <figure>
+          <figcaption>List identical files under a folder</figcaption>
+          <pre><code>fdupes -r ./documents</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="structure">
+        <p class="step-kicker">Step 3</p>
+        <h2>Folders and file names</h2>
+        <p class="why"><span class="label">Why</span> The path becomes part of the citation. A person and a retrieval system both need to see which document a passage came from.</p>
+        <h3>How</h3>
+        <ul>
+          <li>Use one collection per top folder: <code>policies</code>, <code>contracts</code>, <code>meetings</code>, <code>support</code>.</li>
+          <li>Stay shallow. Collection, then year or topic, then the file is enough.</li>
+          <li>Use lowercase names with hyphens. Put an ISO date first when the date identifies the document: <code>2024-11-01_travel-policy.md</code>.</li>
+          <li>Leave <code>final</code>, <code>latest</code>, and <code>new</code> out of names. The current folder holds the current files. Older copies live in an archive folder you do not index.</li>
+          <li>Add a short <code>README</code> in each collection: what it contains, who owns it, and what “current” means.</li>
+          <li>Keep secrets and personal data out of file names. Names show up in logs, citations, and search results.</li>
+        </ul>
+        <figure>
+          <figcaption>A layout that cites cleanly</figcaption>
+          <pre><code>policies/travel/2024-11-01_travel-policy.md
+meetings/2024/2024-03-12_board-minutes.md
+contracts/acme/2023-06-01_master-services-agreement.pdf
+mail/2024/thread-9f3a/</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="metadata">
+        <p class="step-kicker">Step 4</p>
+        <h2>Metadata</h2>
+        <p class="why"><span class="label">Why</span> Title, date, author, source, type, and permissions tell you what a retrieved paragraph is and who may see it. A file’s modified time is a weak substitute for the date on the document.</p>
+        <h3>How</h3>
+        <p>Put a header at the top of each text file, or a sidecar with the same stem, such as <code>travel-policy.meta.txt</code>. Use the date printed on the document when it differs from the file timestamp.</p>
+        <ul>
+          <li><strong>title</strong> — the name a person would use.</li>
+          <li><strong>date</strong> — the document date, as <code>YYYY-MM-DD</code>.</li>
+          <li><strong>author</strong> — a person or the team that issued it.</li>
+          <li><strong>source</strong> — where this copy came from: a URL, a library path, or a message id.</li>
+          <li><strong>type</strong> — a short list you actually use: policy, contract, email, minutes, spreadsheet, how-to.</li>
+          <li><strong>permissions</strong> — the audience: <code>public</code>, <code>internal</code>, or a named group such as <code>hr</code>.</li>
+        </ul>
+        <p>Keep a stable id if you rename the file, so a later update replaces the same document. A permission label does nothing until the search application filters on it. Step 11 is where that filter has to hold.</p>
+        <figure>
+          <figcaption>A header block in the text file</figcaption>
+          <pre><code>---
+title: Travel policy
+date: 2024-11-01
+author: People team
+source: sharepoint://policies/travel.docx
+type: policy
+permissions: internal
+id: travel-policy
+---</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="pdfs">
+        <p class="step-kicker">Step 5</p>
+        <h2>PDFs</h2>
+        <p class="why"><span class="label">Why</span> A PDF is a picture of a page plus, sometimes, a hidden text layer. If the text layer is missing or scrambled, extraction returns blank pages or nonsense, and the model has nothing true to quote.</p>
+
+        <h3>How</h3>
+
+        <h4>Text PDFs and scanned PDFs</h4>
+        <p>Open the file and try to select a sentence. If you can copy real words, it is a text PDF (sometimes called born-digital). If selection fails, or the copied text is gibberish, the page is a scan or a broken export.</p>
+        <p>Confirm from the command line with <a href="https://poppler.freedesktop.org/">Poppler</a>’s <code>pdftotext</code>. A text PDF prints words. A scan prints almost nothing.</p>
+        <figure>
+          <figcaption>Read a PDF that already contains text</figcaption>
+          <pre><code>pdftotext -eol unix policy.pdf policy.txt</code></pre>
+        </figure>
+        <p>Default <code>pdftotext</code> rebuilds reading order, which is what you want for prose. Add <code>-layout</code> when you need to see columns while you check a page. <code>-layout</code> pads lines with spaces, so it is a poor file to chunk as-is. Page breaks are form-feed characters; leave them in if you want to cite a page number. <code>-nopgbrk</code> removes them.</p>
+        <p>Some PDFs have a text layer that is still wrong, because the font encoding is damaged. If the words look garbled, treat the file like a scan and OCR it.</p>
+
+        <h4>OCR with Tesseract and OCRmyPDF</h4>
+        <p><a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a> reads an image of text. <a href="https://ocrmypdf.readthedocs.io/">OCRmyPDF</a> runs Tesseract on a PDF and writes a searchable PDF with the text hidden behind the page image. Keep the original scan, and write the OCR result beside it.</p>
+        <p>Set the language. Quality drops when the language is wrong. Combine languages with a plus sign when a document mixes them. <code>--deskew</code> straightens pages that were scanned slightly crooked. <code>--sidecar</code> also writes a plain-text file.</p>
+        <figure>
+          <figcaption>OCR a scanned PDF and write a text sidecar</figcaption>
+          <pre><code>ocrmypdf -l eng --deskew --sidecar policy.txt scan.pdf policy-searchable.pdf</code></pre>
+        </figure>
+        <p>OCRmyPDF stops when a PDF already has text, so a mixed file (some real text, some scans) needs <code>--skip-text</code>. That option OCRs only the pages that have no text yet.</p>
+        <figure>
+          <figcaption>OCR only the scanned pages in a mixed PDF</figcaption>
+          <pre><code>ocrmypdf -l eng --skip-text mixed.pdf mixed-searchable.pdf</code></pre>
+        </figure>
+        <p>For one image, call Tesseract directly. For a PDF of many scans, prefer OCRmyPDF so the text stays tied to pages.</p>
+        <figure>
+          <figcaption>OCR a single image</figcaption>
+          <pre><code>tesseract page.png stdout -l eng</code></pre>
+        </figure>
+        <p>Install the Tesseract language packs you name with <code>-l</code>. After OCR, read a few pages. Skew, handwriting, stamps, and tiny footnotes still fail, and those pages need a person.</p>
+
+        <h4>Tables and layout</h4>
+        <p>Simple extractors read left to right. Two columns become one scrambled column. A table becomes a sequence of cell values with the row and column breaks gone. Headers and footers get glued onto the first and last line of every page.</p>
+        <p>For a report whose meaning is in the tables, use a tool that emits a Markdown table or structured cells, then spot-check every important table against the PDF. If a table is the contract, keep the PDF page number in the text so someone can open the original.</p>
+
+        <h4>Extraction tools</h4>
+        <ul>
+          <li><a href="https://poppler.freedesktop.org/"><strong>pdftotext</strong></a> (Poppler). Fast, and the right start for ordinary text PDFs. Weak on complex layout.</li>
+          <li><a href="https://pymupdf.readthedocs.io/"><strong>PyMuPDF</strong></a>. A Python library for page-by-page text, images, and positions. Use it when you want page numbers and a script you control.</li>
+          <li><a href="https://github.com/docling-project/docling"><strong>Docling</strong></a>. Converts PDFs and several office formats to Markdown or JSON, with attention to reading order and tables. Current docs show <code>docling convert policy.pdf --to md</code>; older releases used <code>docling policy.pdf</code>. Trust <code>docling --help</code> on your install.</li>
+          <li><a href="https://github.com/Unstructured-IO/unstructured"><strong>Unstructured</strong></a>. Splits a document into elements such as title, paragraph, and table, which are natural boundaries for chunking.</li>
+          <li><a href="https://github.com/datalab-to/marker"><strong>Marker</strong></a>. Converts a PDF to Markdown in one pass, including many tables and multi-column pages.</li>
+        </ul>
+        <p>Start with <code>pdftotext</code> for simple text PDFs. Move to Docling, Unstructured, or Marker when columns or tables come out wrong. A short PyMuPDF script is a good middle step when you only need page-labeled text:</p>
+        <figure>
+          <figcaption>Page-labeled text with PyMuPDF</figcaption>
+          <pre><code>import pymupdf
+
+doc = pymupdf.open("policy.pdf")
+for number, page in enumerate(doc, start=1):
+    print(f"\n\n--- page {number} ---\n")
+    print(page.get_text())</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="emails">
+        <p class="step-kicker">Step 6</p>
+        <h2>Emails</h2>
+        <p class="why"><span class="label">Why</span> Decisions often live in mail, and a raw export is full of signatures, legal footers, and the same quoted history repeated under every reply. Indexed that way, one thread crowds out everything else.</p>
+        <h3>How</h3>
+
+        <h4>Export <code>.eml</code>, <code>.mbox</code>, or <code>.pst</code></h4>
+        <ul>
+          <li><strong><code>.eml</code></strong> is one message per file. It is the easiest form to process and to cite.</li>
+          <li><strong><code>.mbox</code></strong> is many messages in one file. Thunderbird and Google Takeout mail use it.</li>
+          <li><strong><code>.pst</code></strong> is an Outlook archive. Convert it before ingestion. <a href="https://www.five-ten-sg.com/libpst/">readpst</a> (from libpst) can write one file per message with an extension such as <code>.eml</code>.</li>
+        </ul>
+        <figure>
+          <figcaption>Turn a PST into separate message files</figcaption>
+          <pre><code>readpst -e -o mail/ archive.pst</code></pre>
+        </figure>
+        <p>Keep the exported originals. Build a separate text copy for the index.</p>
+
+        <h4>Keep threads together</h4>
+        <p>Group messages with the <code>Message-ID</code>, <code>In-Reply-To</code>, and <code>References</code> headers. Sort each thread by date, and write one Markdown file with a heading per message. When those headers are missing, group by subject after you strip prefixes such as <code>Re:</code>, <code>Fw:</code>, <code>Fwd:</code>, and <code>Aw:</code>, and expect a few unrelated messages to land together. Check those.</p>
+        <figure>
+          <figcaption>One file for the thread, messages in time order</figcaption>
+          <pre><code># Q1 pricing
+permissions: internal
+
+## 2024-02-03 Ada Lovelace to Ben Smith
+message-id: &lt;abc@example.com&gt;
+
+Can we hold last year's rate through March?
+
+## 2024-02-04 Ben Smith to Ada Lovelace
+message-id: &lt;def@example.com&gt;
+
+Yes, through 31 March. The attached schedule is the one to use.</code></pre>
+        </figure>
+
+        <h4>Attachments</h4>
+        <p>Save attachments next to the parent message, with the message id or date in the file name. List those file names in the message text so the link survives. Convert or OCR an attachment the same way you would if it had arrived on its own: a contract PDF follows step 5, a sheet follows step 8. Skip logos, tracking pixels, and decorative images, and note that you skipped them.</p>
+
+        <h4>Signatures, disclaimers, and quoted replies</h4>
+        <p>Clean the text copy, and leave the <code>.eml</code> untouched.</p>
+        <ul>
+          <li>Drop lines that start with <code>&gt;</code>. They repeat an earlier message that you already store once in the thread file.</li>
+          <li>Drop a trailing block that begins with the conventional signature mark <code>--</code> followed by a space, when that mark is present.</li>
+          <li>Drop legal footers you have listed, once you can see the same paragraph on message after message.</li>
+        </ul>
+        <p>Read a sample of threads after the cleaner runs. Some clients quote without <code>&gt;</code>. Sometimes the only statement of a decision sits in a signature or a quoted blob. Fix those by hand, or rely on the thread file, which already contains the earlier message a single time.</p>
+
+        <h4>Keep sender, recipient, and date</h4>
+        <p>Copy <code>From</code>, <code>To</code>, <code>Cc</code>, <code>Date</code>, <code>Subject</code>, and <code>Message-ID</code> into the text header. The body cleaner has to leave those fields alone. <code>Bcc</code> is often missing on mail you received; leave it out rather than guessing. These fields are how someone checks an answer against the real message.</p>
+      </section>
+
+      <section class="step" id="office">
+        <p class="step-kicker">Step 7</p>
+        <h2>Text, Word, and office files</h2>
+        <p class="why"><span class="label">Why</span> A <code>.docx</code> or <code>.odt</code> file is a package of XML. Models need the words and the headings. The wrong encoding turns accents into junk and can split a word so search misses it.</p>
+        <h3>How</h3>
+        <p>Convert Word, ODT, RTF, and HTML to Markdown so headings stay headings. <a href="https://pandoc.org/">Pandoc</a> is the general tool. <code>--wrap=none</code> avoids hard line breaks in the middle of sentences.</p>
+        <figure>
+          <figcaption>Word to Markdown with Pandoc</figcaption>
+          <pre><code>pandoc -f docx -t markdown --wrap=none -o policy.md policy.docx</code></pre>
+        </figure>
+        <p><a href="https://github.com/microsoft/markitdown">MarkItDown</a> converts Office files to Markdown for text pipelines, including Word, PowerPoint, and Excel. Use it when you want one command across those formats. For slides, see step 9. For a large sheet, prefer the CSV rules in step 8.</p>
+        <figure>
+          <figcaption>Office file to Markdown with MarkItDown</figcaption>
+          <pre><code>markitdown policy.docx -o policy.md</code></pre>
+        </figure>
+        <p>Use plain text when the source is already prose with no headings. Keep the original Office file if people still edit there. The Markdown is the build you index.</p>
+        <h4>Encoding and line endings</h4>
+        <ul>
+          <li>Save every text file as UTF-8.</li>
+          <li>On Linux and many other Unix systems, <code>file --mime-encoding</code> prints a guess. Open the file and look at accents, quotes, and dashes before you trust the guess.</li>
+          <li>Convert a known legacy encoding with <code>iconv</code>. Let the command fail if the bytes do not match, so a bad guess is visible.</li>
+          <li>Use LF line endings (<code>\n</code>). <code>dos2unix</code> converts a file from CRLF. In Git, a <code>.gitattributes</code> line of <code>* text=auto</code> normalizes text files on commit.</li>
+        </ul>
+        <figure>
+          <figcaption>Check an encoding, then convert Windows-1252 to UTF-8</figcaption>
+          <pre><code>file --mime-encoding notes.txt
+iconv -f WINDOWS-1252 -t UTF-8 notes.txt &gt; notes.utf8.txt</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="spreadsheets">
+        <p class="step-kicker">Step 8</p>
+        <h2>Spreadsheets and CSV</h2>
+        <p class="why"><span class="label">Why</span> A worksheet is often several tables, a chart, and a title stuffed into one grid. Retrieved row by row, that mix has no stable meaning.</p>
+        <h3>How</h3>
+        <ul>
+          <li>Put one table in each sheet you export. If a sheet stacks two tables under a chart, split them into two CSV files and describe the chart in a sentence, or leave the chart out.</li>
+          <li>Use a single header row. Names are short, unique, and readable: <code>invoice_date</code>, not <code>Column1</code> and not two columns both called <code>Date</code>.</li>
+          <li>Unmerge cells inside the table. Keep totals out of the data file. If you need a total, write it in the column note.</li>
+          <li>Export each table to CSV in UTF-8. Write dates as <code>YYYY-MM-DD</code>. Store numbers without currency signs, and put the unit in the column name or the note (<code>amount_usd</code>).</li>
+          <li>Describe the columns in a short note beside the CSV: what one row represents, what each column means, and the allowed values when they are a small set.</li>
+          <li>When the formulas themselves matter, keep the workbook and also export the values.</li>
+        </ul>
+        <figure>
+          <figcaption>A column note stored next to the CSV</figcaption>
+          <pre><code># invoices.csv
+One row is one invoice.
+
+invoice_id   Identifier in the billing system
+issued_on    Invoice date, YYYY-MM-DD
+amount_usd   Total in US dollars, no currency symbol
+status       open, paid, or void</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="images">
+        <p class="step-kicker">Step 9</p>
+        <h2>Images, slides, and scans</h2>
+        <p class="why"><span class="label">Why</span> A chart, a photo, and a slide made of pictures are invisible to text search until someone describes them or OCR reads the words on them.</p>
+        <h3>How</h3>
+        <ul>
+          <li>Write alt text or a caption for every image that carries meaning. Say what it shows and the figure that matters (“network diagram: failover path is backup-east, added March 2024”). A file name is not a caption.</li>
+          <li>Store the caption in a sidecar text file (<code>network-diagram.txt</code>) or under the figure in the Markdown you already produced.</li>
+          <li>For slides, write one Markdown section per slide. Include the slide number, the title, the body text, and the speaker notes. MarkItDown reads PPTX files. Add your own caption when a slide is mostly a picture.</li>
+          <li>OCR page scans with Tesseract or OCRmyPDF, as in step 5. A photograph of a whiteboard often comes back garbled. Transcribe the parts you need when the OCR text is wrong.</li>
+        </ul>
+        <figure>
+          <figcaption>Slides to Markdown</figcaption>
+          <pre><code>markitdown slides.pptx -o slides.md</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="chunking">
+        <p class="step-kicker">Step 10</p>
+        <h2>Chunking</h2>
+        <p class="why"><span class="label">Why</span> Retrieval works on passages, and models read a limited amount of text at once. A whole manual as one blob is hard to retrieve. A single sentence with no heading is hard to understand.</p>
+        <h3>How</h3>
+        <ul>
+          <li>Split on headings and sections first. If a section is still very long, split it into passages of a few hundred words. Test that size with real questions (step 12) before you tune it.</li>
+          <li>When a split would cut a sentence or a rule in half, repeat the last sentence or two at the start of the next passage. A large overlap mostly stores the same text twice.</li>
+          <li>Put the heading path on every chunk (“Travel policy &gt; Hotels &gt; International”), plus the document title, the source path or URL, and a page or slide number when you have one.</li>
+          <li>Keep a small table in one chunk. For a large table, chunk by row and repeat the column header and the table name on each piece.</li>
+          <li>Keep a warning with the rule it qualifies. Keep the sentence that introduces a list with that list.</li>
+          <li>Give each chunk a stable id, such as <code>travel-policy#hotels-international</code>, so an update replaces that passage instead of adding another copy.</li>
+        </ul>
+        <figure>
+          <figcaption>What one chunk carries besides the words</figcaption>
+          <pre><code>id: travel-policy#hotels-international
+source: policies/travel/2024-11-01_travel-policy.md
+title: Travel policy
+section: Hotels &gt; International
+page: 4
+permissions: internal
+
+International hotel stays need approval from the traveler's manager
+before booking. The cap is the city rate in the finance sheet.</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="privacy">
+        <p class="step-kicker">Step 11</p>
+        <h2>Privacy and security</h2>
+        <p class="why"><span class="label">Why</span> A retrieval system quotes what you indexed. Anything in the corpus can show up in an answer, and sending that text to a hosted model is a disclosure. This section is practical hygiene, not legal advice.</p>
+        <h3>How</h3>
+        <p>Decide the audience before you add files. An assistant for one team and a bot on a public site are different corpora. Match the corpus to the people who can query it.</p>
+        <h4>Redact personal data you do not need</h4>
+        <p>Remove national ID numbers, payment card numbers, bank details, home addresses, health details, passwords, and API keys when the document still answers questions without them. <a href="https://github.com/microsoft/presidio">Presidio</a> can flag likely personal data. Treat its hits as a review queue. It misses things, and it also flags names you may need to keep, such as the author of a policy. A person reviews high-risk collections.</p>
+        <h4>Honor access rights</h4>
+        <p>If a folder is limited to HR, leave it out of a company-wide index. Store the permission label from step 4, and enforce it in the application that runs the query. A label in the file is not a control on its own. Filters belong in the search layer, where a user only retrieves chunks they are allowed to read.</p>
+        <h4>Leave these out</h4>
+        <ul>
+          <li>Passwords, keys, tokens, and connection strings.</li>
+          <li>A full personal mailbox, when the task only needed a shared team inbox.</li>
+          <li>Documents whose readers are a smaller group than the people who can query the index.</li>
+          <li>Material a contract, a statute, or a legal hold says you cannot process this way. Ask the people who own that decision.</li>
+          <li>Customer content your agreement does not allow you to send to a model provider.</li>
+        </ul>
+        <p class="note">Know where the index and the model run. Text sent to a third-party API leaves your network. Prefer a setup that matches the rule you already follow for that data.</p>
+      </section>
+
+      <section class="step" id="quality">
+        <p class="step-kicker">Step 12</p>
+        <h2>Quality checks</h2>
+        <p class="why"><span class="label">Why</span> Extraction fails quietly. A script can finish with empty pages, reversed columns, or a running header glued into every chunk.</p>
+        <h3>How</h3>
+        <ul>
+          <li>Spot-check a sample of each file type, including the awkward ones: a scan, a two-column PDF, a spreadsheet, a long email thread, and a slide deck.</li>
+          <li>Open the original beside the text. Read the start, a page from the middle, one table, and one page that has a header, a footer, or footnotes.</li>
+          <li>Look for empty output, damaged characters (a UTF-8 file read as Latin-1, or the reverse), missing headings, a table read across the row instead of down it, and the same disclaimer repeated on every page.</li>
+          <li>Write questions people actually ask. For each one, record the document and the passage that should answer it. Run the questions through search or your retrieval tool.</li>
+          <li>On a miss, fix the file or the chunk first. Typical causes are missing text, a bad split, or an old copy still in the index beside the new one. Change the prompt after those are fixed. Keep the question list and run it again after each pipeline change.</li>
+        </ul>
+      </section>
+
+      <section class="step" id="freshness">
+        <p class="step-kicker">Step 13</p>
+        <h2>Keeping it fresh</h2>
+        <p class="why"><span class="label">Why</span> A stale corpus answers with last year’s policy. Two editable copies drift apart the week someone updates only one of them.</p>
+        <h3>How</h3>
+        <ul>
+          <li>Keep a single source of truth. People edit the policy site, the contract folder, or the sheet. The text you index is a build from that source, not a second place to edit.</li>
+          <li>When a source changes, re-extract that document and replace its chunks under the same id. Leave the old text out of the index.</li>
+          <li>Log each change: date, document id, old and new hash, and who or what job ran it. Git history is enough when the text files live in Git. Otherwise append one line to a log.</li>
+          <li>When a document is superseded, remove it from the index or mark it superseded and exclude that mark from normal search. Keep the file in an archive folder if retention says you must hold it.</li>
+          <li>Review collections that change often, such as prices and procedures, on a schedule you can keep. Signed contracts usually change only when someone replaces the file.</li>
+        </ul>
+        <figure>
+          <figcaption>An append-only change log</figcaption>
+          <pre><code>2026-04-02  travel-policy        replaced  sha256:9c1e…  people-team-bot
+2026-04-02  2019-travel-policy   removed   superseded by travel-policy</code></pre>
+        </figure>
+      </section>
+
+      <section class="step" id="checklist">
+        <p class="step-kicker">Step 14</p>
+        <h2>One-page checklist</h2>
+        <p class="why"><span class="label">Why</span> A short list is what you can actually run before you call a corpus ready. Print this section, or keep it in the collection README.</p>
+        <div class="sheet">
+          <h3>Scope</h3>
+          <ul class="checks">
+            <li>Locations are listed: drives, mail, wikis, local folders.</li>
+            <li>Each collection has an owner, and the corpus has an owner.</li>
+            <li>In and out of scope are written down, with a reason.</li>
+          </ul>
+          <h3>Cleanup, names, and metadata</h3>
+          <ul class="checks">
+            <li>Exact duplicates are removed or parked outside the index.</li>
+            <li>One current version is chosen for each document.</li>
+            <li>Junk files are gone (<code>.DS_Store</code>, <code>Thumbs.db</code>, lock files, empties).</li>
+            <li>Folders are shallow, and names are stable. ISO dates lead when the date matters.</li>
+            <li>Each document has title, date, author, source, type, and permissions.</li>
+          </ul>
+          <h3>Conversion</h3>
+          <ul class="checks">
+            <li>Text PDFs are extracted. Scans are OCR’d before extraction.</li>
+            <li>Tables were checked against the original, not only the body text.</li>
+            <li>Mail is <code>.eml</code> or <code>.mbox</code>. PST files are converted.</li>
+            <li>Threads stay together. Attachments sit beside the message.</li>
+            <li>Signatures, disclaimers, and quoted replies are stripped on the text copy only.</li>
+            <li>Sender, recipients, and date are kept.</li>
+            <li>Office files are Markdown or UTF-8 text. Encoding is UTF-8. Line endings are LF.</li>
+            <li>Each sheet export is one CSV table, with a column note.</li>
+            <li>Images and slides have a caption, alt text, or OCR text.</li>
+          </ul>
+          <h3>Chunks, access, and upkeep</h3>
+          <ul class="checks">
+            <li>Chunks follow headings. Each chunk has its heading path, source, and id.</li>
+            <li>Personal data you do not need is redacted. A person reviewed the high-risk sets.</li>
+            <li>Secrets and out-of-audience material are left out.</li>
+            <li>Permission labels are stored, and search enforces them.</li>
+            <li>A sample of each file type was compared with the original.</li>
+            <li>Real questions return the right passage. Misses were rechecked after fixes.</li>
+            <li>The corpus is rebuilt from the source of truth.</li>
+            <li>Changes are logged. Superseded documents are out of normal search.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="colophon">
+    <p>Document-AI. Plain HTML and CSS. No trackers and no external scripts.</p>
+    <p><a href="#content">Back to top</a></p>
+  </footer>
+</body>
+</html>
