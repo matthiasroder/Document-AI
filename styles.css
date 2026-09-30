@@ -89,6 +89,22 @@ a:hover {
   text-decoration-thickness: 2px;
 }
 
+a.term {
+  text-decoration-style: dotted;
+}
+
+a.term:hover {
+  text-decoration-style: solid;
+}
+
+h2 a.term {
+  color: inherit;
+}
+
+h2 a.term:hover {
+  color: var(--accent);
+}
+
 .hero,
 .layout,
 .colophon {
@@ -141,6 +157,12 @@ h1 {
   font-size: 1.2rem;
   line-height: 1.45;
   color: var(--muted);
+}
+
+.start-jump {
+  margin: 0.85rem 0 0;
+  font-family: var(--sans);
+  font-size: 1rem;
 }
 
 .layout {
@@ -209,6 +231,16 @@ h2 {
 h3 {
   margin: 1.4rem 0 0.45rem;
   font-size: 1.15rem;
+}
+
+h3.just-title {
+  margin: 1.15rem 0 0.35rem;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 h4 {
@@ -344,6 +376,92 @@ td code {
   border-left: 3px solid var(--accent);
 }
 
+.start {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  padding: 1.15rem 1.15rem 0.4rem;
+}
+
+.start h2 {
+  margin-top: 0;
+}
+
+.power {
+  margin: 1.35rem 0 0.25rem;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+}
+
+.power summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  cursor: pointer;
+  list-style: none;
+  padding: 0.85rem 1rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.power summary::-webkit-details-marker {
+  display: none;
+}
+
+.power summary::marker {
+  content: "";
+}
+
+.power summary::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin-top: 0.35rem;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(-45deg);
+}
+
+.power[open] > summary::before {
+  margin-top: 0.25rem;
+  transform: rotate(45deg);
+}
+
+.power summary:hover {
+  background: var(--accent-soft);
+}
+
+.power-body {
+  padding: 0.15rem 1rem 0.9rem;
+  border-top: 1px solid var(--line);
+}
+
+.power-body h3:first-of-type {
+  margin-top: 0.85rem;
+}
+
+.glossary dt {
+  margin-top: 1rem;
+  font-family: var(--sans);
+  font-weight: 700;
+  scroll-margin-top: 1.25rem;
+}
+
+.glossary dt:first-of-type {
+  margin-top: 0.35rem;
+}
+
+.glossary dd {
+  margin: 0.15rem 0 0;
+}
+
+.glossary dt:target,
+.glossary dt:has(:target) {
+  background: var(--accent-soft);
+}
+
 .sheet {
   background: var(--bg-elev);
   border: 1px solid var(--line);
@@ -450,8 +568,20 @@ td code {
   .why,
   pre,
   .table-scroll,
-  .sheet {
+  .sheet,
+  .start,
+  .power,
+  .power summary:hover {
     background: #fff;
+  }
+
+  details.power::details-content {
+    display: block;
+    content-visibility: visible;
+  }
+
+  .power summary::before {
+    border-color: #000;
   }
 
   #checklist {
