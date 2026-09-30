@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A practical guide to preparing document repositories for search, retrieval-augmented generation, and other language-model workflows.">
+  <meta name="description" content="A practical guide to preparing documents for ChatGPT, Claude, NotebookLM, search, and other language-model workflows, including a path that needs no terminal.">
   <meta name="color-scheme" content="light dark">
   <title>Prepare documents for AI</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -15,13 +15,15 @@
   <header class="hero">
     <p class="kicker">Document-AI</p>
     <h1>Prepare documents for AI</h1>
-    <p class="lede">A practical guide to getting a repository of files ready for search, retrieval-augmented generation, and other language-model workflows.</p>
+    <p class="lede">A practical guide to getting a repository of files ready for search, <a class="term" href="#term-retrieval">retrieval-augmented generation</a>, and other language-model workflows.</p>
+    <p class="start-jump"><a href="#start">Start here</a> if you have about 20 files and you do not want to use a terminal.</p>
   </header>
 
   <div class="layout">
     <nav aria-labelledby="toc-title">
       <p class="toc-title" id="toc-title">Contents</p>
       <ol>
+        <li><a href="#start">Start here</a></li>
         <li><a href="#why">Why this matters</a></li>
         <li><a href="#formats">Target formats</a></li>
         <li><a href="#inventory">1. Inventory and scope</a></li>
@@ -38,21 +40,51 @@
         <li><a href="#quality">12. Quality checks</a></li>
         <li><a href="#freshness">13. Keeping it fresh</a></li>
         <li><a href="#checklist">14. Checklist</a></li>
+        <li><a href="#glossary">Glossary</a></li>
       </ol>
     </nav>
 
     <main id="content">
+
+      <section class="start" id="start">
+        <h2>Start here</h2>
+        <p>You have about 20 files, and you want <a href="https://chatgpt.com/">ChatGPT</a>, <a href="https://claude.ai/">Claude</a>, or <a href="https://notebooklm.google.com/">NotebookLM</a> to answer from them. This path needs no terminal. Do the three moves, then upload the folder. The numbered steps further down are the full method.</p>
+
+        <h3>1. Keep only the current file</h3>
+        <p>For each document, keep the copy you would stand behind today. Put older drafts somewhere you will not upload: names with <code>final</code>, <code>v7</code>, <code>latest</code>, <code>copy</code>, or <code>(1)</code> are the usual clues. If two files disagree, ask the owner which one is current. If nobody will say, keep the latest approved copy and write that choice down.</p>
+
+        <h3>2. Make sure you can select the words</h3>
+        <p>Open each PDF and drag across a sentence. If real words highlight, the file is ready. If nothing selects, or the copy is nonsense, the page is a picture. Run text recognition (<a class="term" href="#term-ocr">OCR</a>) so the file gains a <a class="term" href="#term-text-layer">text layer</a>, then read one page of the result next to the original. Word files, Google Docs, and plain text you can already read can skip this move.</p>
+        <ul>
+          <li><strong>Mac, Preview.</strong> Open the PDF, choose File &gt; Export, and select Embed Text if that checkbox is shown. Save a new file. Apple’s Preview guide documents this on macOS Ventura and later. The checkbox appears when the PDF does not already contain recognized text. The saved file can be selected in other viewers.</li>
+          <li><strong>Adobe Acrobat.</strong> Choose All tools &gt; Scan &amp; OCR, then In this file, then Recognize text, and save. Menu labels move between versions; look for Scan &amp; OCR and Recognize text. Those commands are in Acrobat, the paid editor. The free Acrobat Reader does not include them.</li>
+          <li><strong>Google Drive.</strong> On a computer, upload the scan, right-click it, and choose Open with Google Docs. <a href="https://support.google.com/drive/answer/176692">Google’s help</a> says the file should be 2 megabytes or smaller, right-side up, and sharp, and that tables and columns often do not come through. Compare the Doc with the scan, including the last pages. To make a PDF of the Doc, choose File &gt; Download &gt; PDF Document (.pdf). You can also add the Doc itself as a NotebookLM source.</li>
+          <li><strong>Word, opening a scan.</strong> Choose File &gt; Open and open the PDF. Word converts a copy and tries to recover the words. Microsoft says this works best when the page is mostly typed text, and that you should proofread. Handwriting usually fails. The original PDF is left unchanged.</li>
+          <li><strong>A document you typed.</strong> Saving as PDF keeps words that are already text. A photograph of a page still needs the recognition steps above. In Word, choose File &gt; Save As or Save a Copy and pick PDF, or choose File &gt; Export &gt; Create PDF/XPS. In Apple Pages, choose File &gt; Export To &gt; PDF. On a Mac you can also choose File &gt; Print, then PDF &gt; Save as PDF. On Windows, print and choose the printer Microsoft Print to PDF. In LibreOffice, choose File &gt; Export As &gt; Export as PDF.</li>
+          <li><strong>One picture of a page.</strong> On a Mac, open it in Preview and copy the words if you can select them, then paste them into a document. On Windows 11, open the picture in the Photos app and use Scan text if that button is there. The Microsoft Lens app on a phone can save a scan as a Word document. Read the result.</li>
+        </ul>
+
+        <h3>3. Name each file with a date</h3>
+        <p>Put the date printed on the document first, as year-month-day, then a short name with hyphens: <code>2024-11-01_travel-policy.pdf</code>. Leave <code>final</code>, <code>latest</code>, and <code>new</code> out of the name. Keep passwords, customer secrets, and home addresses out of the name too. Names show up in search results and in the chat’s citations.</p>
+
+        <h3>Ask from those files</h3>
+        <p>Put the prepared files in one folder and upload that set. In NotebookLM, create a notebook and add the files as sources. About 20 files is a comfortable set. A PDF locked against copying can be refused; if you are allowed to, open it and save a new PDF. In ChatGPT or Claude, attach the files in the chat. If the account has Projects, add the files there so the next question uses the same set.</p>
+        <p>Ask a question you already know the answer to. If the reply is empty or wrong, look for a missing text layer or an old draft still in the folder before you rephrase the question.</p>
+        <p class="note">Uploading sends a copy of the files to that company. Leave out secrets, and leave out any file the people using the chat are not allowed to see. <a href="#privacy">Step 11</a> is the longer version of that rule.</p>
+      </section>
+
       <section id="why">
         <h2>Why preparation matters</h2>
-        <p>This guide is for people who already have a pile of files: a shared drive, an exported mailbox, a wiki dump, a folder of contracts. Search and language models can only use the text you give them. They do not know which copy is current. They cannot read a photograph of a page until something has recognized the letters. They will repeat a password, a home address, or an old policy if that text is in the index.</p>
+        <p>This guide is for people who already have a pile of files: a shared drive, an exported mailbox, a wiki dump, a folder of contracts. Search and language models can only use the text you give them. They do not know which copy is current. They cannot read a photograph of a page until something has recognized the letters. They will repeat a password, a home address, or an old policy if that text is in the <a class="term" href="#term-index">index</a>.</p>
         <p>Most bad answers start in the files, before anyone writes a prompt. Duplicate drafts compete with the real document. Scans have no text layer. Tables get read across the wrong way. Every email reply contains the whole thread again. Dates are missing, so nothing can tell the 2019 draft from the rule in force.</p>
         <p>Preparation is ordinary library work. You decide what is in scope, keep one current copy, turn it into clean text with a title and a source, and check that a real question finds the right passage. The steps below are enough to start with common tools. Work them in order. Skip a conversion step when you do not have that kind of file, and still run the checklist so the skip was a choice.</p>
+        <p>Each numbered step opens with a short “Just do this.” The commands and the longer notes are in Power-user version on that same step.</p>
         <p>Tool names below are starting points. Commands change between versions. If a flag differs from what you have installed, the project’s own <code>--help</code> wins.</p>
       </section>
 
       <section id="formats">
         <h2>Target formats</h2>
-        <p>Pick one text form for the index and keep the original file as the record people still edit or sign. The text form is what search and the model read.</p>
+        <p>Pick one text form for the index and keep the original file as the record people still edit or sign. The text form is what search and the model read. For a small upload to a chat, <a href="#start">Start here</a> is enough when the words in each file are already selectable.</p>
         <div class="table-scroll">
           <table>
             <caption>Recommended target for each kind of file. Keep the original next to the text.</caption>
@@ -66,7 +98,7 @@
             <tbody>
               <tr>
                 <th scope="row">Text PDF</th>
-                <td>Markdown or UTF-8 text, plus the PDF</td>
+                <td><a class="term" href="#term-markdown">Markdown</a> or <a class="term" href="#term-utf-8">UTF-8</a> text, plus the PDF</td>
                 <td>The words are already in the file. The PDF stays the record.</td>
               </tr>
               <tr>
@@ -76,7 +108,7 @@
               </tr>
               <tr>
                 <th scope="row">Email</th>
-                <td><code>.eml</code> or <code>.mbox</code>, plus a cleaned text copy</td>
+                <td><a class="term" href="#term-eml"><code>.eml</code></a> or <a class="term" href="#term-mbox"><code>.mbox</code></a>, plus a cleaned text copy</td>
                 <td>Headers stay intact. The text copy is what you index.</td>
               </tr>
               <tr>
@@ -86,12 +118,12 @@
               </tr>
               <tr>
                 <th scope="row">Plain text</th>
-                <td>UTF-8 text with LF line endings</td>
-                <td>Stops encoding damage and noisy diffs.</td>
+                <td>UTF-8 text with LF <a class="term" href="#term-line-endings">line endings</a></td>
+                <td>Stops <a class="term" href="#term-encoding">encoding</a> damage and noisy diffs.</td>
               </tr>
               <tr>
                 <th scope="row">Spreadsheet</th>
-                <td>CSV, one table per file, plus a column note</td>
+                <td><a class="term" href="#term-csv">CSV</a>, one table per file, plus a column note</td>
                 <td>Each row means one thing, and each column has a name.</td>
               </tr>
               <tr>
@@ -113,6 +145,11 @@
         <p class="step-kicker">Step 1</p>
         <h2>Inventory and scope</h2>
         <p class="why"><span class="label">Why</span> You can only prepare a collection you have listed. Indexing everything also pulls in drafts, personal mail, and files a smaller group was meant to see alone.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Write down every place the files live: a folder on your computer, a shared drive, a wiki, a mailbox. Next to each place, note who owns it and whether you will include it. Leave out personal mail, drafts you would not stand behind, and anything a contract or legal staff say must stay out. A spreadsheet or a note is enough. Name one person who can answer for this <a class="term" href="#term-corpus">corpus</a>, the set you are about to prepare.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <ul>
           <li>List every place documents live: shared drives, SharePoint or Google Drive exports, wikis, ticket exports, local project folders, and mail archives.</li>
@@ -121,12 +158,19 @@
           <li>Name one owner for the prepared corpus, and keep the owner of each source collection. Someone has to answer “is this the current file?”</li>
         </ul>
         <p>A spreadsheet is enough. Suggested columns: location, file types, date range, owner, in or out, reason, sensitivity. This is a decision record. It does not need to be a cataloging system.</p>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="cleanup">
         <p class="step-kicker">Step 2</p>
         <h2>Clean up</h2>
         <p class="why"><span class="label">Why</span> Duplicates and old drafts compete with the current document. Search then returns several answers, and the longest one is often the wrong version.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Keep one current copy of each document. Move older drafts and extra copies into a folder you will not upload, or delete them when retention rules allow. Leave out junk the computer adds on its own, such as <code>.DS_Store</code>, <code>Thumbs.db</code>, Word lock files whose names start with <code>~$</code>, and empty files.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <ul>
           <li>Find exact copies by file content. <a href="https://github.com/adrianlopezroche/fdupes">fdupes</a> groups files that are byte-for-byte identical. Keep one copy of each group.</li>
@@ -138,12 +182,19 @@
           <figcaption>List identical files under a folder</figcaption>
           <pre><code>fdupes -r ./documents</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="structure">
         <p class="step-kicker">Step 3</p>
         <h2>Folders and file names</h2>
         <p class="why"><span class="label">Why</span> The path becomes part of the citation. A person and a retrieval system both need to see which document a passage came from.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Give each collection its own folder, and keep the path short: the collection, then a year or a topic, then the file. Name the file with the date first, as year-month-day, then a short hyphenated name, as in <code>2024-11-01_travel-policy.md</code>. The current folder holds the current files. Keep passwords and home addresses out of names. Add a few lines in a <code>README</code> saying what the folder contains, who owns it, and what “current” means.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <ul>
           <li>Use one collection per top folder: <code>policies</code>, <code>contracts</code>, <code>meetings</code>, <code>support</code>.</li>
@@ -160,12 +211,19 @@ meetings/2024/2024-03-12_board-minutes.md
 contracts/acme/2023-06-01_master-services-agreement.pdf
 mail/2024/thread-9f3a/</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="metadata">
         <p class="step-kicker">Step 4</p>
-        <h2>Metadata</h2>
+        <h2><a class="term" href="#term-metadata">Metadata</a></h2>
         <p class="why"><span class="label">Why</span> Title, date, author, source, type, and permissions tell you what a retrieved paragraph is and who may see it. A file’s modified time is a weak substitute for the date on the document.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>For each document, write the title a person would use, the date printed on it as year-month-day, who issued it, where this copy came from, the kind of document, and who may read it. Put that block at the top of the text file, or in a <a class="term" href="#term-sidecar">sidecar file</a> beside it, such as <code>travel-policy.meta.txt</code>. The date on the document matters more than the date the computer last saved the file.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <p>Put a header at the top of each text file, or a sidecar with the same stem, such as <code>travel-policy.meta.txt</code>. Use the date printed on the document when it differs from the file timestamp.</p>
         <ul>
@@ -189,12 +247,19 @@ permissions: internal
 id: travel-policy
 ---</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="pdfs">
         <p class="step-kicker">Step 5</p>
         <h2>PDFs</h2>
         <p class="why"><span class="label">Why</span> A PDF is a picture of a page plus, sometimes, a hidden text layer. If the text layer is missing or scrambled, extraction returns blank pages or nonsense, and the model has nothing true to quote.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Open the PDF and try to select a sentence. If real words highlight, you can use the file. If selection fails, or the copied words are nonsense, follow the recognition steps in <a href="#start">Start here</a>, then read one page of the result beside the original. When the meaning is in a table, check that table against the PDF. A plain extractor often reads across a row the wrong way, and it glues the page header onto the text.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
 
         <h3>How</h3>
 
@@ -205,7 +270,7 @@ id: travel-policy
           <figcaption>Read a PDF that already contains text</figcaption>
           <pre><code>pdftotext -eol unix policy.pdf policy.txt</code></pre>
         </figure>
-        <p>Default <code>pdftotext</code> rebuilds reading order, which is what you want for prose. Add <code>-layout</code> when you need to see columns while you check a page. <code>-layout</code> pads lines with spaces, so it is a poor file to chunk as-is. Page breaks are form-feed characters; leave them in if you want to cite a page number. <code>-nopgbrk</code> removes them.</p>
+        <p>Default <code>pdftotext</code> rebuilds reading order, which is what you want for prose. Add <code>-layout</code> when you need to see columns while you check a page. <code>-layout</code> pads lines with spaces, so it is a poor file to <a class="term" href="#term-chunk">chunk</a> as-is. Page breaks are form-feed characters; leave them in if you want to cite a page number. <code>-nopgbrk</code> removes them.</p>
         <p>Some PDFs have a text layer that is still wrong, because the font encoding is damaged. If the words look garbled, treat the file like a scan and OCR it.</p>
 
         <h4>OCR with Tesseract and OCRmyPDF</h4>
@@ -249,12 +314,26 @@ for number, page in enumerate(doc, start=1):
     print(f"\n\n--- page {number} ---\n")
     print(page.get_text())</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="emails">
         <p class="step-kicker">Step 6</p>
         <h2>Emails</h2>
         <p class="why"><span class="label">Why</span> Decisions often live in mail, and a raw export is full of signatures, legal footers, and the same quoted history repeated under every reply. Indexed that way, one thread crowds out everything else.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Save the threads you need, not a whole private mailbox. Keep each thread together, in date order, with the sender and the date on every reply. Leave the saved message untouched.</p>
+        <ul>
+          <li><strong>Gmail, on the web.</strong> Open the message, open the three-dot More menu, and choose Download message. That saves an .eml file.</li>
+          <li><strong>Apple Mail.</strong> Choose File &gt; Save As and set the format to Raw Message Source, which is one message as an .eml file. Dragging the message onto a folder saves the same kind of file.</li>
+          <li><strong>Thunderbird.</strong> Choose File &gt; Save As &gt; File.</li>
+          <li><strong>Outlook.</strong> In new Outlook, open the message and choose More actions &gt; Save as. In Outlook on the web, choose More actions &gt; Download. The saved file is one message; the ending depends on the version.</li>
+        </ul>
+        <p>For the copy you upload, drop repeated quoted replies and a legal footer you see on message after message, and keep the sender, the recipients, and the date. Save attachments next to the thread, and skip logos.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
 
         <h4>Export <code>.eml</code>, <code>.mbox</code>, or <code>.pst</code></h4>
@@ -301,12 +380,19 @@ Yes, through 31 March. The attached schedule is the one to use.</code></pre>
 
         <h4>Keep sender, recipient, and date</h4>
         <p>Copy <code>From</code>, <code>To</code>, <code>Cc</code>, <code>Date</code>, <code>Subject</code>, and <code>Message-ID</code> into the text header. The body cleaner has to leave those fields alone. <code>Bcc</code> is often missing on mail you received; leave it out rather than guessing. These fields are how someone checks an answer against the real message.</p>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="office">
         <p class="step-kicker">Step 7</p>
         <h2>Text, Word, and office files</h2>
         <p class="why"><span class="label">Why</span> A <code>.docx</code> or <code>.odt</code> file is a package of XML. Models need the words and the headings. The wrong encoding turns accents into junk and can split a word so search misses it.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>You can upload a Word file as it is. To make a PDF whose words stay selectable, in Word choose File &gt; Save As or Save a Copy and pick PDF, or choose File &gt; Export &gt; Create PDF/XPS. In LibreOffice, choose File &gt; Export As &gt; Export as PDF. For a plain text file, save it so accents and quotes still look right; the full notes below use UTF-8 for that. Keep the original office file if people still edit there.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <p>Convert Word, ODT, RTF, and HTML to Markdown so headings stay headings. <a href="https://pandoc.org/">Pandoc</a> is the general tool. <code>--wrap=none</code> avoids hard line breaks in the middle of sentences.</p>
         <figure>
@@ -331,12 +417,19 @@ Yes, through 31 March. The attached schedule is the one to use.</code></pre>
           <pre><code>file --mime-encoding notes.txt
 iconv -f WINDOWS-1252 -t UTF-8 notes.txt &gt; notes.utf8.txt</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="spreadsheets">
         <p class="step-kicker">Step 8</p>
         <h2>Spreadsheets and CSV</h2>
         <p class="why"><span class="label">Why</span> A worksheet is often several tables, a chart, and a title stuffed into one grid. Retrieved row by row, that mix has no stable meaning.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Put one table on each sheet you export. Use a single header row, with a short unique name on every column, and take merged cells and totals out of the data. In Google Sheets, choose File &gt; Download &gt; Comma-separated values (.csv). In Excel, choose File &gt; Save As or Save a Copy and pick a CSV type; Microsoft’s help says the types you see depend on the sheet, and a CSV save writes the active sheet only. Prefer a type whose name includes UTF-8 when it is listed, so accents survive. Write dates as year-month-day. Beside the file, note what one row represents and what each column means.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <ul>
           <li>Put one table in each sheet you export. If a sheet stacks two tables under a chart, split them into two CSV files and describe the chart in a sentence, or leave the chart out.</li>
@@ -356,12 +449,19 @@ issued_on    Invoice date, YYYY-MM-DD
 amount_usd   Total in US dollars, no currency symbol
 status       open, paid, or void</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="images">
         <p class="step-kicker">Step 9</p>
         <h2>Images, slides, and scans</h2>
         <p class="why"><span class="label">Why</span> A chart, a photo, and a slide made of pictures are invisible to text search until someone describes them or OCR reads the words on them.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Write a caption for every picture that carries meaning, and keep it in a text file next to the image or under the figure. Say what it shows. A file name is not a caption. For a photo of a page, use the recognition steps in <a href="#start">Start here</a>, and type the words yourself when the result is garbled, which is common for a whiteboard. For slides, upload the PowerPoint file, or in PowerPoint choose File &gt; Export &gt; Create PDF/XPS (or File &gt; Save As, then PDF) so words on the slides are real text. Add a caption when a slide is mostly a picture.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <ul>
           <li>Write alt text or a caption for every image that carries meaning. Say what it shows and the figure that matters (“network diagram: failover path is backup-east, added March 2024”). A file name is not a caption.</li>
@@ -373,12 +473,19 @@ status       open, paid, or void</code></pre>
           <figcaption>Slides to Markdown</figcaption>
           <pre><code>markitdown slides.pptx -o slides.md</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="chunking">
         <p class="step-kicker">Step 10</p>
         <h2>Chunking</h2>
         <p class="why"><span class="label">Why</span> Retrieval works on passages, and models read a limited amount of text at once. A whole manual as one blob is hard to retrieve. A single sentence with no heading is hard to understand.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>With about 20 files in ChatGPT, Claude, or NotebookLM, leave each document whole. Those products split long files on their own. If an answer misses the right section, break the document at its headings and put the document title and the heading at the top of each piece. Keep a small table in one piece, and repeat the column names if you must split a large table. Keep a warning in the same piece as the rule it qualifies.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <ul>
           <li>Split on headings and sections first. If a section is still very long, split it into passages of a few hundred words. Test that size with real questions (step 12) before you tune it.</li>
@@ -400,12 +507,19 @@ permissions: internal
 International hotel stays need approval from the traveler's manager
 before booking. The cap is the city rate in the finance sheet.</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="privacy">
         <p class="step-kicker">Step 11</p>
         <h2>Privacy and security</h2>
         <p class="why"><span class="label">Why</span> A retrieval system quotes what you indexed. Anything in the corpus can show up in an answer, and sending that text to a hosted model is a disclosure. This section is practical hygiene, not legal advice.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Before you upload, remove national ID numbers, payment cards, bank details, home addresses, health details, passwords, and secret keys when the document still answers the question without them. Leave out any file whose readers are a smaller group than the people who can use the chat. Uploading sends a copy to the company that runs the chat. If these files are confidential, keep them off a public chat. A permission label does nothing until the app that runs the search enforces it.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <p>Decide the audience before you add files. An assistant for one team and a bot on a public site are different corpora. Match the corpus to the people who can query it.</p>
         <h4>Redact personal data you do not need</h4>
@@ -421,12 +535,19 @@ before booking. The cap is the city rate in the finance sheet.</code></pre>
           <li>Customer content your agreement does not allow you to send to a model provider.</li>
         </ul>
         <p class="note">Know where the index and the model run. Text sent to a third-party API leaves your network. Prefer a setup that matches the rule you already follow for that data.</p>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="quality">
         <p class="step-kicker">Step 12</p>
         <h2>Quality checks</h2>
         <p class="why"><span class="label">Why</span> Extraction fails quietly. A script can finish with empty pages, reversed columns, or a running header glued into every chunk.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Open the original beside the text for a few files: one ordinary document, one scan, one table, one email thread, and one slide deck, if you have them. Read the start, a page from the middle, and one table. Then ask three questions you already know the answer to. If the reply is empty or wrong, fix the file first. Typical causes are missing words, a bad split, or an old copy still in the set.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <ul>
           <li>Spot-check a sample of each file type, including the awkward ones: a scan, a two-column PDF, a spreadsheet, a long email thread, and a slide deck.</li>
@@ -435,12 +556,19 @@ before booking. The cap is the city rate in the finance sheet.</code></pre>
           <li>Write questions people actually ask. For each one, record the document and the passage that should answer it. Run the questions through search or your retrieval tool.</li>
           <li>On a miss, fix the file or the chunk first. Typical causes are missing text, a bad split, or an old copy still in the index beside the new one. Change the prompt after those are fixed. Keep the question list and run it again after each pipeline change.</li>
         </ul>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="freshness">
         <p class="step-kicker">Step 13</p>
         <h2>Keeping it fresh</h2>
         <p class="why"><span class="label">Why</span> A stale corpus answers with last year’s policy. Two editable copies drift apart the week someone updates only one of them.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Edit the document in one place. The file you upload is a copy of that place, not a second copy to edit. When the source changes, replace the uploaded copy and remove the old one so the chat cannot quote last year’s version. Check prices and procedures on a schedule you will keep. A signed contract usually changes only when someone replaces the file.</p>
+        <details class="power">
+          <summary>Power-user version: full notes for this step</summary>
+          <div class="power-body">
         <h3>How</h3>
         <ul>
           <li>Keep a single source of truth. People edit the policy site, the contract folder, or the sheet. The text you index is a build from that source, not a second place to edit.</li>
@@ -454,12 +582,17 @@ before booking. The cap is the city rate in the finance sheet.</code></pre>
           <pre><code>2026-04-02  travel-policy        replaced  sha256:9c1e…  people-team-bot
 2026-04-02  2019-travel-policy   removed   superseded by travel-policy</code></pre>
         </figure>
+                </div>
+        </details>
       </section>
 
       <section class="step" id="checklist">
         <p class="step-kicker">Step 14</p>
         <h2>One-page checklist</h2>
         <p class="why"><span class="label">Why</span> A short list is what you can actually run before you call a corpus ready. Print this section, or keep it in the collection README.</p>
+        <h3 class="just-title">Just do this</h3>
+        <p>Tick this list before you call the folder ready.</p>
+
         <div class="sheet">
           <h3>Scope</h3>
           <ul class="checks">
@@ -500,6 +633,44 @@ before booking. The cap is the city rate in the finance sheet.</code></pre>
           </ul>
         </div>
       </section>
+
+      <section class="glossary" id="glossary">
+        <h2>Glossary</h2>
+        <p>One sentence for each word this guide uses in a special way.</p>
+        <dl>
+          <dt id="term-ocr">OCR</dt>
+          <dd>OCR, short for optical character recognition, is the step that reads letters in a picture or a scan and saves them as text you can select and search.</dd>
+          <dt id="term-chunk">Chunk</dt>
+          <dd>A chunk is a short passage cut from a longer document so search can return that part instead of the whole file.</dd>
+          <dt id="term-retrieval"><span id="term-rag">Retrieval (RAG)</span></dt>
+          <dd>Retrieval, also called RAG (retrieval-augmented generation), finds passages in your files and hands them to the model so the answer comes from those passages.</dd>
+          <dt id="term-metadata">Metadata</dt>
+          <dd>Metadata is facts stored with a document, such as its title, date, author, and who may read it.</dd>
+          <dt id="term-encoding">Encoding</dt>
+          <dd>Encoding is the rule a text file uses to store letters as bytes, and the wrong rule turns accents and punctuation into junk.</dd>
+          <dt id="term-utf-8">UTF-8</dt>
+          <dd>UTF-8 is a text encoding that can store almost every written language, and it is the encoding this guide asks you to use.</dd>
+          <dt id="term-line-endings">Line endings</dt>
+          <dd>Line endings are the invisible characters that mark the end of a line, and Windows and Unix systems write different ones.</dd>
+          <dt id="term-eml">.eml</dt>
+          <dd>An .eml file is one email message, including the sender, the recipients, the date, and the body.</dd>
+          <dt id="term-mbox">.mbox</dt>
+          <dd>An .mbox file stores many email messages, one after another, and it is the form Thunderbird and Google Takeout use.</dd>
+          <dt id="term-csv">CSV</dt>
+          <dd>A CSV file, short for comma-separated values, is a plain-text table where each line is a row and commas separate the columns.</dd>
+          <dt id="term-sidecar">Sidecar file</dt>
+          <dd>A sidecar file is a small text file kept beside a document, usually with the same name, that holds a caption or notes about that document.</dd>
+          <dt id="term-index">Index</dt>
+          <dd>The index is the searchable copy of your documents that the question-answering system actually looks through.</dd>
+          <dt id="term-corpus">Corpus</dt>
+          <dd>A corpus is the set of documents you have decided to include and prepare.</dd>
+          <dt id="term-markdown">Markdown</dt>
+          <dd>Markdown is a plain-text way to mark headings, lists, and links so both people and tools can see the structure.</dd>
+          <dt id="term-text-layer">Text layer</dt>
+          <dd>A text layer is the hidden, selectable words stored inside a PDF, behind the picture of the page.</dd>
+        </dl>
+      </section>
+
     </main>
   </div>
 
